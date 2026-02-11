@@ -4,65 +4,29 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch:
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: true
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+    - name: Checkout
+      uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
-          cache: npm
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
 
-      - name: Install dependencies (ensure dev deps are installed)
-        run: |
-          npm config set production false
-          npm ci
+    - name: Install dependencies
+      run: npm ci
 
-      - name: Diagnostics
-        run: |
-          echo "node: $(node -v)"
-          echo "npm: $(npm -v)"
-          echo "Listing node_modules/.bin (if present):"
-          ls -la node_modules/.bin || true
+    - name: Build
+      run: npm run build -- --configuration production --base-href /inspect-nav/
 
-      - name: Build (with fallback to install CLI and builder)
-        run: |
-          if [ -x node_modules/.bin/ng ]; then
-            echo "Local ng found — building..."
-            npm run build -- --configuration production --base-href /inspect-nav/
-          else
-            echo "Local ng missing — installing @angular/cli + @angular-devkit/build-angular and building..."
-            npm i --no-audit --no-fund -D @angular/cli@16.2.16 @angular-devkit/build-angular
-            npm run build -- --configuration production --base-href /inspect-nav/
-          fi
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: dist/inspect-nav
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./dist/inspect-nav/browser
