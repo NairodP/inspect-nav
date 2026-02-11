@@ -31,8 +31,8 @@ jobs:
       - name: Install dependencies (include dev deps)
         run: npm ci --include=dev
 
-      - name: Build (use npx ng to ensure CLI availability)
-        run: npx ng build --configuration production --base-href /inspect-nav/
+      - name: Build (use a pinned Angular CLI via npx to ensure availability)
+        run: npx -y @angular/cli@16.2.16 build --configuration production --base-href /inspect-nav/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
