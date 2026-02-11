@@ -23,7 +23,7 @@ jobs:
       run: npm ci
 
     - name: Build
-      run: npm run build -- --configuration production --base-href /inspect-nav/
+      run: npx ng build --configuration production --base-href /inspect-nav/
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
