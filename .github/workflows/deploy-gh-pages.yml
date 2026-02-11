@@ -44,7 +44,7 @@ jobs:
         run: npm run build -- --configuration production --base-href /inspect-nav/
 
       - name: Fallback: install CLI and build if ng missing
-        if: failure()
+        if: ${{ failure() }}
         run: |
           echo "Fallback: installing @angular/cli and @angular-devkit/build-angular locally"
           npm i --no-audit --no-fund -D @angular/cli@16.2.16 @angular-devkit/build-angular
