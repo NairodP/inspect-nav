@@ -28,11 +28,27 @@ jobs:
           node-version: 18
           cache: npm
 
-      - name: Install dependencies (include dev deps)
-        run: npm ci --include=dev
+      - name: Install dependencies (ensure dev deps are installed)
+        run: |
+          npm config set production false
+          npm ci
+
+      - name: Verify local ng availability (diagnostic)
+        run: |
+          echo "node version: $(node -v)"
+          echo "npm version: $(npm -v)"
+          ls -la node_modules/.bin || true
+          test -f node_modules/.bin/ng && echo "ng present" || (echo "ng missing" && exit 1)
 
       - name: Build (use local CLI via npm script)
         run: npm run build -- --configuration production --base-href /inspect-nav/
+
+      - name: Fallback: install CLI and build if ng missing
+        if: failure()
+        run: |
+          echo "Fallback: installing @angular/cli and @angular-devkit/build-angular locally"
+          npm i --no-audit --no-fund -D @angular/cli@16.2.16 @angular-devkit/build-angular
+          npm run build -- --configuration production --base-href /inspect-nav/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
