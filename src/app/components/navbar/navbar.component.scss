@@ -1,29 +1,10 @@
-/* ============================================
-   INSPECT - Premium Navbar Design System
-   Glassmorphism + Modern UI
-   ============================================ */
-
-// Design Tokens
-$primary: #6366f1;
-$primary-dark: #4f46e5;
-$primary-light: #818cf8;
-$accent: #22d3ee;
-$surface: #0f172a;
-$surface-light: #1e293b;
-$text-primary: #f8fafc;
-$text-secondary: rgba(248, 250, 252, 0.7);
-$glass-bg: rgba(15, 23, 42, 0.8);
-$glass-border: rgba(255, 255, 255, 0.08);
+$primary: #2563eb;
+$primary-dark: #1d4ed8;
+$primary-light: #60a5fa;
+$accent: #14b8a6;
+$text-primary: #0f172a;
+$text-secondary: rgba(15, 23, 42, 0.6);
 $transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-$transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-
-// Mixins
-@mixin glass-effect {
-  background: $glass-bg;
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid $glass-border;
-}
 
 @mixin focus-ring {
   &:focus-visible {
@@ -32,7 +13,6 @@ $transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 }
 
-/* Main Navbar Container */
 .navbar {
   position: fixed;
   top: 0;
@@ -40,8 +20,13 @@ $transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   right: 0;
   height: 56px;
   z-index: 1000;
-  @include glass-effect;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  border-bottom: 1px solid rgba(15, 23, 42, 0.12);
+  box-shadow: 0 20px 36px rgba(15, 23, 42, 0.14),
+    0 6px 16px rgba(15, 23, 42, 0.06),
+    0 1px 0 rgba(255, 255, 255, 0.9) inset;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .navbar-glow {
@@ -50,16 +35,16 @@ $transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   left: 50%;
   transform: translateX(-50%);
   width: 60%;
-  height: 1px;
+  height: 2px;
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(99, 102, 241, 0.5),
-    rgba(34, 211, 238, 0.5),
-    rgba(99, 102, 241, 0.5),
+    rgba(37, 99, 235, 0.45),
+    rgba(20, 184, 166, 0.45),
+    rgba(37, 99, 235, 0.45),
     transparent
   );
-  filter: blur(1px);
+  filter: blur(2px);
 }
 
 .navbar-content {
@@ -72,27 +57,101 @@ $transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   gap: 24px;
 }
 
-/* Brand Section */
 .nav-brand {
   display: flex;
   align-items: center;
   cursor: pointer;
   padding: 6px 0;
 
-  &:hover .brand-name {
-    opacity: 0.7;
+  &:hover .brand-logo {
+    opacity: 0.95;
   }
 }
 
-.brand-name {
-  font-size: 18px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  color: #ffffff;
+.brand-logo {
+  height: 26px;
+  width: auto;
+  display: block;
+  color: $text-primary;
   transition: opacity 0.2s ease;
 }
 
-/* Main Navigation Section */
+.brand-logo path {
+  fill: currentColor;
+  clip-path: inset(0 100% 0 0);
+  filter: drop-shadow(0 0 8px rgba(37, 99, 235, 0.12));
+  animation: logo-reveal 0.7s ease-out forwards,
+    logo-glow 0.9s ease-out forwards;
+  will-change: clip-path;
+}
+
+.brand-logo path:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.brand-logo path:nth-child(2) {
+  animation-delay: 0.01s;
+}
+
+.brand-logo path:nth-child(3) {
+  animation-delay: 0.02s;
+}
+
+.brand-logo path:nth-child(4) {
+  animation-delay: 0.03s;
+}
+
+.brand-logo path:nth-child(5) {
+  animation-delay: 0.04s;
+}
+
+.brand-logo path:nth-child(6) {
+  animation-delay: 0.05s;
+}
+
+.brand-logo path:nth-child(7) {
+  animation-delay: 0.06s;
+}
+
+.brand-logo path:nth-child(8) {
+  animation-delay: 0.07s;
+}
+
+.brand-logo path:nth-child(9) {
+  animation-delay: 0.08s;
+}
+
+.brand-logo path:nth-child(10) {
+  animation-delay: 0.09s;
+}
+
+@keyframes logo-reveal {
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes logo-glow {
+  0% {
+    filter: drop-shadow(0 0 0 rgba(37, 99, 235, 0))
+      drop-shadow(0 0 0 rgba(20, 184, 166, 0));
+  }
+  60% {
+    filter: drop-shadow(0 0 10px rgba(37, 99, 235, 0.25))
+      drop-shadow(0 0 16px rgba(20, 184, 166, 0.2));
+  }
+  100% {
+    filter: drop-shadow(0 0 6px rgba(37, 99, 235, 0.12));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brand-logo path {
+    animation: none;
+    clip-path: none;
+    filter: none;
+  }
+}
 .nav-main {
   display: flex;
   align-items: center;
@@ -100,15 +159,14 @@ $transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   flex: 1;
 }
 
-/* Menu Trigger Button */
 .menu-trigger {
   width: 36px;
   height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(15, 23, 42, 0.04);
+  border: 1px solid rgba(15, 23, 42, 0.12);
   border-radius: 8px;
   color: $text-secondary;
   cursor: pointer;
@@ -122,25 +180,23 @@ $transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   &:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.15);
+    background: rgba(15, 23, 42, 0.08);
+    border-color: rgba(15, 23, 42, 0.18);
     color: $text-primary;
   }
 }
 
-/* Nav Separator */
 .nav-separator {
   width: 1px;
   height: 28px;
   background: linear-gradient(
     to bottom,
     transparent,
-    rgba(255, 255, 255, 0.15),
+    rgba(15, 23, 42, 0.2),
     transparent
   );
 }
 
-/* Selected Navigation Display */
 .selected-nav {
   display: flex;
   align-items: center;
@@ -148,10 +204,10 @@ $transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   padding: 6px 12px;
   background: linear-gradient(
     135deg,
-    rgba(99, 102, 241, 0.15) 0%,
-    rgba(34, 211, 238, 0.08) 100%
+    rgba(37, 99, 235, 0.08) 0%,
+    rgba(20, 184, 166, 0.08) 100%
   );
-  border: 1px solid rgba(99, 102, 241, 0.2);
+  border: 1px solid rgba(37, 99, 235, 0.18);
   border-radius: 8px;
 }
 
@@ -165,7 +221,7 @@ $transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border-radius: 6px;
 
   mat-icon {
-    color: white;
+    color: #ffffff;
     font-size: 18px;
     width: 18px;
     height: 18px;
@@ -198,8 +254,8 @@ $transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   align-items: center;
   gap: 10px;
   padding: 10px 16px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(15, 23, 42, 0.04);
+  border: 1px solid rgba(15, 23, 42, 0.12);
   border-radius: 12px;
   color: $text-secondary;
 
@@ -215,7 +271,6 @@ $transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 }
 
-/* Actions Section */
 .nav-actions {
   display: flex;
   align-items: center;
@@ -228,8 +283,8 @@ $transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(15, 23, 42, 0.04);
+  border: 1px solid rgba(15, 23, 42, 0.12);
   border-radius: 8px;
   color: $text-secondary;
   cursor: pointer;
@@ -246,8 +301,8 @@ $transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
   &:hover {
     color: $text-primary;
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.15);
+    background: rgba(15, 23, 42, 0.08);
+    border-color: rgba(15, 23, 42, 0.18);
 
     mat-icon,
     svg {
@@ -257,13 +312,34 @@ $transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .deploy-btn:hover {
-  background: rgba(34, 211, 238, 0.15);
-  border-color: rgba(34, 211, 238, 0.3);
-  color: $accent;
+  background: rgba(20, 184, 166, 0.14);
+  border-color: rgba(20, 184, 166, 0.32);
+  color: #0f766e;
+  box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.12),
+    0 10px 18px rgba(20, 184, 166, 0.18);
+}
+
+.deploy-btn:hover mat-icon,
+.deploy-btn:hover svg {
+  transform: none;
+}
+
+.kpi-btn:hover {
+  background: rgba(20, 184, 166, 0.12);
+  border-color: rgba(20, 184, 166, 0.32);
+  color: #0f766e;
+  box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.12),
+    0 10px 18px rgba(20, 184, 166, 0.18);
+}
+
+.kpi-btn:hover mat-icon,
+.kpi-btn:hover svg {
+  color: #0f766e;
+  transform: none;
 }
 
 .github-btn:hover {
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(15, 23, 42, 0.08);
 }
 
 /* Divider */
@@ -273,17 +349,12 @@ $transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   background: linear-gradient(
     to bottom,
     transparent,
-    rgba(255, 255, 255, 0.15),
+    rgba(15, 23, 42, 0.2),
     transparent
   );
   margin: 0 4px;
 }
 
-/* ========================================
-   Environment Selector - Clean Design
-   ======================================== */
-
-// Color palette
 $env-dev: #10b981;
 $env-ppd: #f59e0b;
 $env-prv: #3b82f6;
@@ -294,15 +365,15 @@ $env-rec: #a855f7;
   align-items: center;
   gap: 10px;
   padding: 8px 12px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(15, 23, 42, 0.04);
+  border: 1px solid rgba(15, 23, 42, 0.12);
   border-radius: 10px;
   cursor: pointer;
   transition: all $transition-fast;
   color: $text-primary;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(15, 23, 42, 0.08);
   }
 
   .env-letter {
@@ -354,19 +425,34 @@ $env-rec: #a855f7;
   }
 }
 
-/* Environment Dropdown Panel */
 ::ng-deep .env-menu-panel {
   .mat-mdc-menu-panel {
-    background: #0f172a !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%) !important;
+    border: 1px solid rgba(15, 23, 42, 0.12) !important;
     border-radius: 10px !important;
-    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5) !important;
+    box-shadow: 0 18px 36px rgba(15, 23, 42, 0.12),
+      0 6px 14px rgba(15, 23, 42, 0.06) !important;
     min-width: 120px !important;
   }
 
+  .mat-mdc-menu-panel::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(
+      90deg,
+      rgba(37, 99, 235, 0.6),
+      rgba(20, 184, 166, 0.6),
+      rgba(37, 99, 235, 0.6)
+    );
+  }
+
   .mat-mdc-menu-content {
-    padding: 6px !important;
-    background: #0f172a !important;
+    padding: 10px !important;
+    background: transparent !important;
   }
 
   .mat-mdc-menu-item {
@@ -378,6 +464,7 @@ $env-rec: #a855f7;
     padding: 0 12px !important;
     border-radius: 6px !important;
     background: transparent !important;
+    border: 1px solid transparent !important;
 
     mat-icon {
       color: #10b981 !important;
@@ -390,35 +477,56 @@ $env-rec: #a855f7;
     span {
       font-size: 13px;
       font-weight: 600;
-      color: rgba(255, 255, 255, 0.8) !important;
+      color: rgba(15, 23, 42, 0.8) !important;
       letter-spacing: 1px;
     }
 
     &:hover {
-      background: rgba(255, 255, 255, 0.08) !important;
+      background: linear-gradient(
+        90deg,
+        rgba(37, 99, 235, 0.08),
+        rgba(20, 184, 166, 0.08)
+      ) !important;
+      border-color: rgba(37, 99, 235, 0.18) !important;
+      box-shadow: 0 10px 18px rgba(15, 23, 42, 0.08) !important;
 
       span {
-        color: #fff !important;
+        color: rgba(15, 23, 42, 0.9) !important;
       }
     }
   }
 }
 
-/* Main Navigation Menu */
 ::ng-deep .main-nav-menu,
 ::ng-deep .sub-nav-menu {
   .mat-mdc-menu-panel {
-    background: #0f172a !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%) !important;
+    border: 1px solid rgba(15, 23, 42, 0.12) !important;
     border-radius: 14px !important;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5) !important;
+    box-shadow: 0 18px 36px rgba(15, 23, 42, 0.12),
+      0 6px 14px rgba(15, 23, 42, 0.06) !important;
     overflow: hidden;
     min-width: 200px !important;
   }
 
+  .mat-mdc-menu-panel::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(
+      90deg,
+      rgba(37, 99, 235, 0.6),
+      rgba(20, 184, 166, 0.6),
+      rgba(37, 99, 235, 0.6)
+    );
+  }
+
   .mat-mdc-menu-content {
-    padding: 8px !important;
-    background: #0f172a !important;
+    padding: 10px !important;
+    background: transparent !important;
   }
 
   .mat-mdc-menu-item {
@@ -426,19 +534,20 @@ $env-rec: #a855f7;
     height: 46px !important;
     min-height: 46px !important;
     margin-bottom: 4px !important;
-    color: rgba(255, 255, 255, 0.7) !important;
+    color: rgba(15, 23, 42, 0.7) !important;
     transition: all 0.15s ease !important;
     display: flex !important;
     align-items: center !important;
     gap: 12px !important;
     background: transparent !important;
+    border: 1px solid transparent !important;
 
     &:last-child {
       margin-bottom: 0 !important;
     }
 
     mat-icon {
-      color: rgba(255, 255, 255, 0.5) !important;
+      color: rgba(15, 23, 42, 0.5) !important;
       font-size: 20px;
       width: 20px;
       height: 20px;
@@ -448,27 +557,34 @@ $env-rec: #a855f7;
     span {
       font-size: 14px;
       font-weight: 500;
-      color: rgba(255, 255, 255, 0.7) !important;
+      color: rgba(15, 23, 42, 0.7) !important;
     }
 
     &:hover {
-      background: rgba(255, 255, 255, 0.08) !important;
+      background: linear-gradient(
+        90deg,
+        rgba(37, 99, 235, 0.08),
+        rgba(20, 184, 166, 0.08)
+      ) !important;
+      border-color: rgba(37, 99, 235, 0.18) !important;
+      box-shadow: 0 10px 18px rgba(15, 23, 42, 0.08) !important;
 
       mat-icon,
       span {
-        color: #fff !important;
+        color: rgba(15, 23, 42, 0.9) !important;
       }
     }
 
     &.active {
-      background: rgba(99, 102, 241, 0.15) !important;
+      background: rgba(37, 99, 235, 0.12) !important;
+      border-color: rgba(37, 99, 235, 0.3) !important;
 
       mat-icon {
-        color: #818cf8 !important;
+        color: $primary !important;
       }
 
       span {
-        color: #fff !important;
+        color: $primary-dark !important;
       }
     }
   }

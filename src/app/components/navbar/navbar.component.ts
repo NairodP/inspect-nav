@@ -23,13 +23,13 @@ interface EnvItem {
 
 // Mappings identiques à l'application originale
 const MAPPING_TYPE: Record<string, { icon: string; title: string }> = {
-  request: { icon: 'north_east', title: 'Requêtes' },
-  rest: { icon: 'south_west', title: 'Appels reçus' },
-  batch: { icon: 'settings_suggest', title: 'Exécution de Batch' },
-  test: { icon: 'rule', title: 'Exécution de Test' },
-  startup: { icon: 'restart_alt', title: 'Lancement de Serveur' },
-  view: { icon: 'explore', title: 'Navigation' },
-  deploiment: { icon: 'deployed_code', title: 'Déploiement' },
+  request: { icon: 'call_made', title: 'Intéractions' },
+  rest: { icon: 'call_received', title: 'Services exposés' },
+  batch: { icon: 'manufacturing', title: 'Tâches planifiées' },
+  test: { icon: 'rule', title: 'Validation & Tests' },
+  startup: { icon: 'restart_alt', title: 'Initialisation' },
+  view: { icon: 'ads_click', title: 'Parcours Clients' },
+  actives_instances: { icon: 'deployed_code', title: 'Instances Actives' },
 };
 
 const REQUEST_TYPE: Record<string, { icon: string; title: string }> = {
@@ -155,7 +155,6 @@ export class NavbarComponent {
   }
 
   gotoHome() {
-    // Reset navigation to default
     this.currentNav = null;
     this.currentSubNav = null;
     console.log('Go to home');
