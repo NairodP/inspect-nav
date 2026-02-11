@@ -33,22 +33,23 @@ jobs:
           npm config set production false
           npm ci
 
-      - name: Verify local ng availability (diagnostic)
+      - name: Diagnostics
         run: |
-          echo "node version: $(node -v)"
-          echo "npm version: $(npm -v)"
+          echo "node: $(node -v)"
+          echo "npm: $(npm -v)"
+          echo "Listing node_modules/.bin (if present):"
           ls -la node_modules/.bin || true
-          test -f node_modules/.bin/ng && echo "ng present" || (echo "ng missing" && exit 1)
 
-      - name: Build (use local CLI via npm script)
-        run: npm run build -- --configuration production --base-href /inspect-nav/
-
-      - name: Fallback: install CLI and build if ng missing
-        if: ${{ failure() }}
+      - name: Build (with fallback to install CLI and builder)
         run: |
-          echo "Fallback: installing @angular/cli and @angular-devkit/build-angular locally"
-          npm i --no-audit --no-fund -D @angular/cli@16.2.16 @angular-devkit/build-angular
-          npm run build -- --configuration production --base-href /inspect-nav/
+          if [ -x node_modules/.bin/ng ]; then
+            echo "Local ng found — building..."
+            npm run build -- --configuration production --base-href /inspect-nav/
+          else
+            echo "Local ng missing — installing @angular/cli + @angular-devkit/build-angular and building..."
+            npm i --no-audit --no-fund -D @angular/cli@16.2.16 @angular-devkit/build-angular
+            npm run build -- --configuration production --base-href /inspect-nav/
+          fi
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
